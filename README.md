@@ -3,7 +3,74 @@
 Protomaps: openstreetmap tools for new babylonian architecture
 https://protomaps.com/
 
+## Install and Set Up (Ubuntu)
+
+Install Guix:
+
+```
+sudo apt install guix
+```
+
+Pull the Guix channels:
+
+```
+guix pull
+```
+
+Update the Guix packages:
+
+```
+guix package -u
+```
+
+Install Guile:
+
+```
+guix install guile
+```
+
+Adding readline and colorized modules:
+
+```
+guix install guile-readline
+guix install guile-colorized
+```
+
+Edit the Guile configuration file:
+
+```
+nano ~/.guile
+```
+
+Add the following to the file:
+
+```
+(use-modules (ice-9 readline) (ice-9 colorized))
+
+(activate-readline)
+(activate-colorized)
+```
+
+Install the Guile Goblins module:
+
+```
+guix install guile-goblins
+```
+
+Enter the directory of the repository:
+
+```
+cd playtime
+```
+
+Install the dependencies:
+
+```
+guix package -m manifest.scm
+```
+
 # Babylonian Architecture Mapping Library & DSL
+
 ## Project Overview
 
 The Babylonian Architecture Mapping Library (BAML) is an innovative software framework designed to enable architects, urban planners, and developers to create new architectural configurations that intelligently integrate with existing urban fabric. By leveraging a custom Domain-Specific Language (BAMDSL), the system provides comprehensive 4D modeling capabilities that account for structural, social, environmental, and temporal dimensions of architectural interventions.
@@ -23,21 +90,25 @@ BAML addresses the emerging challenge of creating new "Babylonian" architectural
 The BAML system consists of several integrated components:
 
 ### 1. Core Mapping Engine
+
 - Imports and processes existing architectural data (GIS, BIM, etc.)
 - Creates comprehensive 3D spatial models with structural properties
 - Maintains a relational database of architectural elements and their characteristics
 
 ### 2. Domain-Specific Language (BAMDSL)
+
 - Provides a specialized syntax for defining architectural configurations
 - Enables precise specification of properties, relationships, and behaviors
 - Supports temporal modeling and evolutionary scenarios
 
 ### 3. Simulation Framework
+
 - Performs structural analysis, load calculations, and stress testing
 - Models social flows, interactions, and space utilization
 - Simulates environmental factors and temporal evolution
 
 ### 4. Visualization Layer
+
 - Generates 3D/4D representations of architectural configurations
 - Provides data visualization for various property types
 - Supports interactive exploration and presentation
@@ -47,6 +118,7 @@ The BAML system consists of several integrated components:
 The BAMDSL language features a consistent, hierarchical syntax designed for clarity and expressiveness:
 
 ### Basic Structure
+
 ```
 Element "IdentifierName" {
     property: value
@@ -61,6 +133,7 @@ Element "IdentifierName" {
 ### Primary Elements
 
 1. **Project** - Defines the overall scope, location, and parameters
+
    ```
    Project "ProjectName" {
        location: (coordinates)
@@ -71,6 +144,7 @@ Element "IdentifierName" {
    ```
 
 2. **Material** - Defines physical properties of construction materials
+
    ```
    Material "MaterialName" {
        density: value
@@ -81,6 +155,7 @@ Element "IdentifierName" {
    ```
 
 3. **Structure** - Defines architectural elements with load-bearing properties
+
    ```
    Structure "StructureName" {
        geometry: GeometryType { /* parameters */ }
@@ -91,6 +166,7 @@ Element "IdentifierName" {
    ```
 
 4. **Space** - Defines functional areas with social properties
+
    ```
    Space "SpaceName" {
        geometry: GeometryType { /* parameters */ }
@@ -101,6 +177,7 @@ Element "IdentifierName" {
    ```
 
 5. **Connection** - Defines relationships between elements
+
    ```
    Connection "ConnectionName" {
        type: "connectionType"
@@ -110,6 +187,7 @@ Element "IdentifierName" {
    ```
 
 6. **Environment** - Defines environmental context and factors
+
    ```
    Environment "EnvironmentName" {
        geometry: GeometryType { /* parameters */ }
@@ -118,6 +196,7 @@ Element "IdentifierName" {
    ```
 
 7. **System** - Defines infrastructure networks and services
+
    ```
    System "SystemName" {
        type: "systemType"
@@ -141,6 +220,7 @@ Element "IdentifierName" {
 ### Operational Commands
 
 1. **Simulate** - Executes simulation analysis
+
    ```
    Simulate "SimulationName" {
        target: @"TargetElement"
@@ -150,6 +230,7 @@ Element "IdentifierName" {
    ```
 
 2. **Visualize** - Controls visualization output
+
    ```
    Visualize "VisualizationName" {
        target: @"TargetElement"
@@ -159,6 +240,7 @@ Element "IdentifierName" {
    ```
 
 3. **Query** - Extracts specific data
+
    ```
    Query "QueryName" {
        select: "elementType"
@@ -168,13 +250,14 @@ Element "IdentifierName" {
    ```
 
 4. **Import/Export** - Handles data exchange
+
    ```
    Import "ImportName" {
        source: "sourceType"
        format: "dataFormat"
        // Additional parameters
    }
-   
+
    Export "ExportName" {
        target: @"TargetElement"
        format: "outputFormat"
@@ -187,16 +270,19 @@ Element "IdentifierName" {
 The BAML system is designed to support various architectural scenarios:
 
 1. **Vertical Expansion Projects**
+
    - Adding new structures to existing rooftops
    - Creating elevated platforms spanning multiple buildings
    - Developing multi-level urban landscapes
 
 2. **Adaptive Reuse**
+
    - Transforming industrial structures into mixed-use spaces
    - Converting obsolete infrastructure into community assets
    - Repurposing historical buildings with modern additions
 
 3. **Urban Infill**
+
    - Integrating new structures within existing urban fabric
    - Creating connections between previously separate buildings
    - Developing transitional spaces between different urban typologies
@@ -236,6 +322,7 @@ BAMDSL is a domain-specific language designed for mapping and simulating archite
 ## 2. Basic Syntax
 
 BAMDSL uses a hierarchical structure with blocks and properties. The language supports:
+
 - Nested blocks denoted by `{}` for hierarchical structures
 - Key-value pairs for properties using `:`
 - Arrays using `[]`
@@ -543,14 +630,14 @@ Project "New Babylon Community Hub" {
     baseDate: 2025-04-20
     timeSpan: 50y
     units: metric
-    
+
     // Import existing city data
     Import "ExistingNeighborhood" {
         source: "CityDatabase"
         format: "GIS-3D"
         layers: ["buildings", "infrastructure", "terrain"]
     }
-    
+
     // Define new materials
     Material "LightweightConcrete" {
         density: 1800kg/m³
@@ -560,7 +647,7 @@ Project "New Babylon Community Hub" {
         weatherResistance: 0.8
         lifespan: 60y
     }
-    
+
     Material "TensileMembranes" {
         density: 1.5kg/m²
         tensileStrength: 3000N/5cm
@@ -568,7 +655,7 @@ Project "New Babylon Community Hub" {
         transparency: 0.3
         lifespan: 25y
     }
-    
+
     // Define structural elements
     Structure "ElevatedPlatform" {
         geometry: Polygon {
@@ -586,7 +673,7 @@ Project "New Babylon Community Hub" {
             {location: (15,15,0), type: "new-column", material: @"ReinforcedConcrete"}
         ]
     }
-    
+
     // Define spaces
     Space "CommunityGarden" {
         geometry: Polygon {
@@ -603,7 +690,7 @@ Project "New Babylon Community Hub" {
             nutrition: "local"
         }
     }
-    
+
     Space "EventPlatform" {
         geometry: Polygon {
             points: [(5,5,15), (25,5,15), (25,15,15), (5,15,15)]
@@ -617,7 +704,7 @@ Project "New Babylon Community Hub" {
             cultural: "medium"
             visibility: 0.8
         }
-        
+
         // This space evolves over time
         Evolution "EventPlatformGrowth" {
             phase(0y) {
@@ -634,7 +721,7 @@ Project "New Babylon Community Hub" {
             }
         }
     }
-    
+
     // Define environmental analysis
     Environment "MicroclimateStudy" {
         geometry: Box {
@@ -650,7 +737,7 @@ Project "New Babylon Community Hub" {
             shadingElements: [@"ExistingTower", @"CanopyStructure"]
         }
     }
-    
+
     // Define simulation commands
     Simulate "StructuralAnalysis" {
         target: @"ElevatedPlatform"
@@ -660,7 +747,7 @@ Project "New Babylon Community Hub" {
         }
         analyze: ["deflection", "stress", "stability"]
     }
-    
+
     Simulate "SocialInteraction" {
         target: @"CommunityGarden"
         scenario: "WeekendActivity"
@@ -670,7 +757,7 @@ Project "New Babylon Community Hub" {
         }
         analyze: ["interaction", "circulation", "activity-patterns"]
     }
-    
+
     // Define visualization
     Visualize "StructuralHealth" {
         target: @"EntireDevelopment"
@@ -679,7 +766,7 @@ Project "New Babylon Community Hub" {
         range: [0, 1]
         colorScale: ["red", "yellow", "green"]
     }
-    
+
     // Define query
     Query "CriticalConnections" {
         select: "connections"
@@ -689,3 +776,175 @@ Project "New Babylon Community Hub" {
     }
 }
 ```
+
+# New Babylon DSL
+
+A Babylonian Architecture Mapping Library & DSL implemented in Guile Scheme using the Goblins distributed object programming environment.
+
+## Overview
+
+New Babylon DSL provides a comprehensive environment for modeling architectural configurations in a distributed, object-oriented paradigm. By leveraging Goblins' transactional and distributed object capabilities, the library enables sophisticated 4D modeling of architectural elements, analyzing both physical and social dimensions over time.
+
+## Key Features
+
+- **Distributed Object Architecture**: Built on Goblins' actor model for distributed, resilient architectural modeling
+- **Domain-Specific Language**: Expressive syntax for defining architectural configurations
+- **Transactional Updates**: Changes within a safe transactional environment
+- **Simulation Framework**: Physics, social flows, and temporal evolution modeling
+- **Distributed Collaboration**: Multiple architects can work on a single model across network
+- **Time-Travel Debugging**: Revisit previous states of the architectural model
+
+## DSL Options
+
+New Babylon offers two different DSL syntaxes:
+
+1. **JSON-style DSL**: A custom syntax that resembles JSON/JavaScript for those who prefer a more domain-specific feel
+2. **Scheme-native DSL**: A Lisp-based syntax that leverages Scheme's natural ability to treat code as data
+
+See the [DSL Comparison](dsl-comparison.md) document for details on the differences.
+
+## Installation
+
+### Prerequisites
+
+- GNU Guile 3.0+
+- Guile-Goblins 0.12.0+ (https://files.spritely.institute/docs/guile-goblins/0.12.0/)
+
+### Setup
+
+1. Clone this repository
+2. Add the repository to your Guile load path
+
+```scheme
+(add-to-load-path "/path/to/new-babylon")
+```
+
+## Usage
+
+### Using the JSON-style DSL
+
+```scheme
+(use-modules (new-babylon module))
+
+(define my-model "
+Project \"Urban Tower\" {
+    location: (34.5677, 40.1233)
+    baseDate: 2025-04-20
+    timeSpan: 50
+    units: metric
+}
+
+Material \"Concrete\" {
+    density: 2400
+    compressiveStrength: 30
+    lifespan: 75
+}
+
+Structure \"MainTower\" {
+    geometry: Box {
+        origin: (0, 0, 0)
+        dimensions: (20, 20, 80)
+    }
+    material: @\"Concrete\"
+    loadCapacity: 10.0
+}
+
+Simulate \"StructuralAnalysis\" {
+    target: @\"MainTower\"
+    conditions: 8.0
+    analyze: [\"load\", \"stability\", \"deflection\"]
+}
+")
+
+;; Parse and run the model
+(define project (run-babylon-dsl my-model))
+```
+
+### Using the Scheme-native DSL
+
+```scheme
+(use-modules (new-babylon scheme-dsl))
+
+;; Define the project
+(define-project "Urban Tower"
+  (34.5677 40.1233)  ; location
+  "2025-04-20"       ; base date
+  50                 ; timespan
+  'metric)           ; units
+
+;; Define materials
+(define-babylon-material "Concrete"
+  '(density . 2400)
+  '(compressiveStrength . 30)
+  '(lifespan . 75))
+
+;; Define structures
+(define-babylon-structure "MainTower"
+  (geometry box '(0 0 0) '(20 20 80))
+  (material (reference 'material "Concrete"))
+  (load-capacity 10.0)
+  (connections))
+
+;; Define simulations
+(babylon-simulate "StructuralAnalysis"
+  (target (reference 'structure "MainTower"))
+  (conditions 8.0)
+  (analyze load stability deflection))
+```
+
+### Simple API Example
+
+```scheme
+(use-modules (new-babylon module))
+
+;; Define a project using the high-level API
+(define project (make-project "My Building" '(34.5 40.1) "2023-01-01" 50 'metric))
+
+;; Create materials
+(define concrete (define-material project "Concrete" '((density . 2400))))
+
+;; Create geometric elements
+(define floor-plan (make-polygon '((0 0 0) (10 0 0) (10 10 0) (0 10 0)) 3))
+
+;; Define a structure
+(define building (define-structure project "MainBuilding" floor-plan concrete '(5.0) '()))
+
+;; Run simulations
+(define structural-analysis (simulate project "StructuralTest" building '(10.0) '(load stability)))
+(display ($ structural-analysis 'run))
+```
+
+## Architecture
+
+The New Babylon DSL consists of several key components:
+
+1. **Core Library** (`new-babylon.scm`): Defines the fundamental actors and API
+2. **Geometry Module** (`geometry.scm`): Provides geometric primitives for spatial modeling
+3. **Simulation Module** (`simulation.scm`): Implements structural, social, and temporal simulations
+4. **JSON-style DSL Parser** (`dsl.scm`): Parses the custom JSON-like syntax
+5. **Scheme-native DSL** (`scheme-dsl.scm`): Implements the Scheme-native syntax using macros
+6. **Module System** (`module.scm`): Provides a convenient unified interface
+
+## Babylonian Architecture Principles
+
+This implementation follows the principles of Babylonian Architecture:
+
+1. **Layered Integration**: Building new structures upon existing ones
+2. **Adaptive Reuse**: Transforming and extending existing structures
+3. **Evolutionary Design**: Modeling how architecture changes over time
+4. **Social Integration**: Considering both physical and social dimensions
+5. **Distributed Collaboration**: Enabling multiple stakeholders to participate
+
+## Goblins Integration
+
+The New Babylon DSL leverages key capabilities of the Goblins environment:
+
+- **Transactional Updates**: Architectural changes happen within safe transactions
+- **Time Travel**: Snapshots of architectural revisions can be accessed
+- **Promise Chaining**: Asynchronous operations with sophisticated promises
+- **Distributed Computing**: Architecture models can span multiple systems
+- **Object Capability Security**: Safe collaboration through ocap principles
+
+## License
+
+Apache License, Version 2.0
